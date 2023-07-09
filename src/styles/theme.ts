@@ -1,49 +1,62 @@
-import { extendTheme } from '@chakra-ui/react';
+import { extendTheme, withDefaultColorScheme } from '@chakra-ui/react';
 
-const theme = extendTheme({
-  styles: {
-    global: {
-      body: {
-        overflowX: 'hidden',
-        backgroundColor: 'neutral.white',
-        color: 'neutral.mateBlack !important',
+const colors = {
+  primary: {
+    100: '#f7f3ee',
+    200: '#e6dacc',
+    300: '#d5c2aa',
+    400: '#c4a988',
+    500: '#b39165',
+    600: '#9a774c',
+    700: '#775d3b',
+    800: '#55422a',
+    900: '#332819',
+  },
+  accent: {
+    50: '#eff3f6',
+    100: '#cfdce3',
+    200: '#afc5d0',
+    300: '#8faebd',
+    400: '#6f96aa',
+    500: '#557d90',
+    600: '#426170',
+    700: '#2f4550',
+    800: '#1c2a30',
+    900: '#090e10',
+  },
+};
+
+export const theme = extendTheme(
+  withDefaultColorScheme({
+    colorScheme: 'primary',
+    components: ['Button'],
+  }),
+
+  {
+    colors,
+    styles: {
+      global: {
+        body: {
+          overflowX: 'hidden',
+          backgroundColor: 'neutral.white',
+          color: 'neutral.mateBlack !important',
+        },
       },
     },
-  },
 
-  fonts: {
-    heading: 'Wulkan Display',
-    body: 'Franklin Gothic Book',
-  },
-
-  fontSizes: {
-    sm: '14px',
-    md: '16px',
-    lg: '20px',
-    xl: '24px',
-  },
-  colors: {
-    brand: {
-      primary: '#ECECE3',
-      secondary: '#CF5C36',
-      tertiary: '#F0F0F0',
+    fonts: {
+      heading: 'Wulkan Display',
+      body: 'Franklin Gothic Book',
     },
-    accent: {
-      turquoise: '#3F7CAC',
-      skyblue: '#285943',
-      tangerine: '#F24236',
-      heliotrope: '#162B3C',
-      footer: '#FEBE1E',
+    components: {
+      Button: {
+        variants: {
+          outline: (props: any) => ({
+            ...props.theme.components.Button.variants.outline,
+            _hover: { background: `${props.colorScheme}.800` },
+          }),
+        },
+      },
     },
-    neutral: {
-      black: '#17181C',
-      mateBlack: '#333',
-      bodyText: '#747A8B',
-      border: '#C7CAD1',
-      inactive: '#EBECEF',
-      white: '#FFFF',
-    },
-  },
-});
-
-export default theme;
+  }
+);
