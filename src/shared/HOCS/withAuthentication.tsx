@@ -1,8 +1,8 @@
-'use client';
-import { useEffect, useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import { useAtom } from 'jotai';
-import { intendedUserPathAtom } from '@/store/store';
+"use client";
+import { useEffect, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { useAtom } from "jotai";
+import { intendedUserPathAtom } from "../global-state/jotai";
 
 const withAuthentication = (WrappedComponent: React.FC) => {
   const AuthenticatedRoute: React.FC = (props) => {
@@ -14,10 +14,10 @@ const withAuthentication = (WrappedComponent: React.FC) => {
 
     useEffect(() => {
       const checkAuthentication = () => {
-        const userToken = localStorage.getItem('user');
+        const userToken = localStorage.getItem("user");
         if (userToken === null) {
           setIntendedUserPath(pathname);
-          router.push('/login');
+          router.push("/login");
         } else {
           setIsLoading(false);
           router.push(intendedUserPath);
