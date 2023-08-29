@@ -50,7 +50,28 @@ export default dispatchServer;
         payLoad: userDetails,
       }),
       meta: {
-        errorMessageToast: ''
+         successMessageToast: "The Upload has been completed successfully",
+      errorMessageToast: "Upload Aborted! Please try again",
       }
+  });
+
+
+
+  const queryClient = useQueryClient();
+ const mutation = useMutation({
+    mutationFn: apiAdminUpdateProduct,
+    onSuccess: async () => {
+     
+     
+      await queryClient.invalidateQueries({ queryKey: ["allProducts"] });
+      
+    },
+    onError: () => {
+     
+    },
+    meta: {
+      successMessageToast: "The Upload has been completed successfully",
+      errorMessageToast: "Upload Aborted! Please try again",
+    },
   });
 */
