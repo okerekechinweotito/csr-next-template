@@ -1,4 +1,4 @@
-import type { AppProps } from 'next/app';
+import type { AppProps } from "next/app";
 import { ChakraProvider, useToast } from "@chakra-ui/react";
 import {
   MutationCache,
@@ -7,8 +7,22 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import theme from "@/shared/styles/theme";
+import "/public/fonts/helvetica/stylesheet.css";
+import { ReactElement, ReactNode } from "react";
+import { NextPage } from "next";
+import Layout from "@/shared/components/layout/layout";
 
-export default function App({ Component, pageProps }: AppProps) {
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? ((page) => <Layout>{page}</Layout>);
   const toast = useToast();
 
   const queryClient = new QueryClient({
@@ -75,8 +89,8 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ChakraProvider>
-        <Component {...pageProps} />
+      <ChakraProvider theme={theme}>
+        {getLayout(<Component {...pageProps} />)}
         <ReactQueryDevtools initialIsOpen={false} />
       </ChakraProvider>
     </QueryClientProvider>
