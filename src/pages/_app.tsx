@@ -8,7 +8,6 @@ import {
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import theme from "@/shared/styles/theme";
-import "/public/fonts/helvetica/stylesheet.css";
 import { ReactElement, ReactNode } from "react";
 import { NextPage } from "next";
 import Layout from "@/shared/components/layout/layout";
